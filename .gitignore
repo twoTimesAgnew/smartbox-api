@@ -1,0 +1,8 @@
+#Ignoring phalcon devtools dir
+.phalcon
+
+#Ignoring vendors
+vendor
+
+#Ignoring PHPStorm files
+.idea

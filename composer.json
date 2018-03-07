@@ -1,0 +1,15 @@
+{
+  "name" : "smartbox-api-v1",
+  "description" : "Phalcon REST API for SmartBox",
+  "keywords" : ["REST", "http", "api", "smartbox", "RESTful", "server"],
+  "homepage" : "https://github.com/twoTimesAgnew/smartbox-api.git",
+  "type" : "library",
+  "license" : "Apache-2.0",
+  "require" : {
+    "phalcon/incubator": "^3.2",
+    "predis/predis": "^1.1.1"
+  },
+  "require-dev" : {
+    "phpunit/phpunit": "^6.4"
+  }
+}
