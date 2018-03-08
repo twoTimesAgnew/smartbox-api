@@ -27,31 +27,52 @@ Returns a JSON list of all products
 ```
 [
   {
-      "id": 1,
-      "spot_id": "B3",
-      "recipient": "Victor Agnew",
-      "smartbox_loc": [
+      "uuid": "298s0agf8xcuj190cs010x9gujajq8as0",
+      "spotId": "B3",
+      "userId": 33,
+      "location": {
           "lat": -72.0291392,
           "lon": 9.928119,
           "city": "Montreal",
           "readable": "123 White Ave."
-        ],
+        },
       "status": 1,
-      "date_in": "03/07/2018",
-      "date_out": "03/08/2018"
+      "dateIn": "03/07/2018",
+      "dateOut": "03/08/2018"
   },
   {
-      "id": 2,
-      "spot_id": "D6",
-      "recipient": "Ben St-Laurent",
-      "smartbox_loc": [
-          "lat": -72.0291392,
-          "lon": 9.928119,
-          "city": "Montreal",
-          "readable": "123 White Ave."
-        ],
+      "uuid": "d9a0sgf8xc0s8918c14510x9guj0f000c",
+      "spotId": "D4",
+      "userId": 12,
+      "location": {
+          "lat": 7.0291392,
+          "lon": 90.928119,
+          "city": "Beijing",
+          "readable": "123 Ching Chong Ave."
+        },
       "status": 0,
-      "date_in": "03/07/2018"
+      "dateIn": "03/07/2018"
   }
 ]
+```
+
+#### POST /products  
+Adds a new product  
+Required Fields
+* userId - Int
+* spotId - String
+* location - Array
+  * lat - Float
+  * lon - Float
+  * city - String
+  * readable - String
+
+##### Returns
+* 200 OK
+```
+{ "status" : "success", "message" : "success message" }
+```
+* 500 Internal Server Error
+```
+{ "status" : "error", "message" : "error message" }
 ```
