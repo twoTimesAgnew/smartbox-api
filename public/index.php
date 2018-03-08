@@ -2,6 +2,8 @@
 
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Micro;
+use Phalcon\Events\Manager;
+use Middleware\NotFoundMiddleware;
 
 error_reporting(E_ALL);
 
@@ -35,7 +37,12 @@ try {
      * Starting the application
      * Assign service locator to the application
      */
+    $eventsManager = new Manager();
     $app = new Micro($di);
+
+    $eventsManager->attach('micro', new NotFoundMiddleware());
+    $app->before(new NotFoundMiddleware());
+    $app->setEventsManager($eventsManager);
 
     /**
      * Include Application

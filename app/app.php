@@ -7,14 +7,14 @@
 /**
  * Add your routes here
  */
-$app->get('/', function () {
-    echo $this['view']->render('index');
+$app->map('/', function () use ($app) {
+    $app->response->setStatusCode(200);
+    $app->response->setJsonContent("Almost there, try /products", JSON_UNESCAPED_SLASHES);
+    $app->response->send();
 });
 
-/**
- * Not found handler
- */
-$app->notFound(function () use($app) {
-    $app->response->setStatusCode(404, "Not Found")->sendHeaders();
-    echo $app['view']->render('404');
+$app->post("/products", function () use ($app) {
+    $app->response->setStatusCode(200);
+    $app->response->setJsonContent("We're here!");
+    $app->response->send();
 });

@@ -18,5 +18,11 @@ return new \Phalcon\Config([
         'host' => "smartbox_mongo_1",
         'port' => 27017,
         'db' => 'smartbox',
+    ],
+
+    "redis" => [
+        "host" => "smartbox_redis_1",
+        "port" => 6379,
+        "db" => 1
     ]
 ]);
