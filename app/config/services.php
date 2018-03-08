@@ -4,6 +4,8 @@ use Phalcon\Mvc\View\Simple as View;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Db\Adapter\MongoDB\Client as MongoDBClient;
 use Phalcon\Mvc\Collection\Manager;
+use Predis\Client as Redis;
+use Phalcon\Logger\Adapter\File as Logger;
 
 # Mongodb service
 $di->setShared('mongo', function() {
@@ -18,6 +20,39 @@ $di->setShared('mongo', function() {
 $di->setShared('collectionManager', function () {
     return new Manager();
 });
+
+$di->setShared('redis', function () {
+    $config = $this->getConfig();
+
+    $redis = new Redis(["host" => $config->redis->redis_host,
+                        "port" => $config->redis->redis_port,
+                        "database" => $config->redis->redis_db,
+                        "timeout" => $config->redis->redis_timeout]);
+    return $redis;
+});
+
+/** * Sets shared loggers */
+$di->setShared('apiLogger', function () {
+    $config = $this->getConfig();
+
+    $logger = new Logger($config->logs->api);
+    return $logger;
+});
+
+$di->setShared('authLogger', function () {
+    $config = $this->getConfig();
+
+    $logger = new Logger($config->logs->auth);
+    return $logger;
+});
+
+$di->setShared('errorLogger', function () {
+    $config = $this->getConfig();
+
+    $logger = new Logger($config->logs->error);
+    return $logger;
+});
+
 
 /**
  * Shared configuration service

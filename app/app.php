@@ -15,6 +15,7 @@ $app->map('/', function () use ($app) {
 
 $app->post("/products", function () use ($app) {
     $app->response->setStatusCode(200);
-    $app->response->setJsonContent("We're here!");
+    $app->response->setJsonContent($app->request->getClientAddress());
+    $app->apiLogger->info("Accessed /products");
     $app->response->send();
 });

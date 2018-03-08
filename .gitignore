@@ -6,3 +6,7 @@ vendor
 
 #Ignoring PHPStorm files
 .idea
+
+#Ignores lib folder contents, but keeps folder
+app/logs
+!app/logs/.gitkeep

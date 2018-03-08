@@ -24,5 +24,11 @@ return new \Phalcon\Config([
         "host" => "smartbox_redis_1",
         "port" => 6379,
         "db" => 1
+    ],
+
+    "logs" => [
+        "api" => APP_PATH . "/logs/api.txt",
+        "error" => APP_PATH . "/logs/error.txt",
+        "info" => APP_PATH . "/logs/info.txt"
     ]
 ]);
