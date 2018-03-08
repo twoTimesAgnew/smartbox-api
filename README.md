@@ -8,6 +8,16 @@ This is a placeholder README.me for Smartbox REST API
 * PHP 7.1
 * MongoDB
 
+## Authentication
+
+This API is protected by a very basic authentication system. The only requirement is that the request must contain  
+an `Authorization` header with a value equal to `smartbox-api-key`.  
+
+Example CURL
+```text
+curl -X GET -H "Authorization: smartbox-api-key" http://52.14.40.2:8600/products
+```
+
 ## Routes
 
 ### Products

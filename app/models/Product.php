@@ -1,10 +1,19 @@
 <?php
+
+namespace Models;
+
 use Phalcon\Mvc\MongoCollection as MongoCollection;
-class Item extends MongoCollection
+
+class Product extends MongoCollection
 {
-    public $firstName;
-    public $lastName;
-    public $email;
+    public $uuid;
+    public $userId;
+    public $spotId;
+    public $location;
+    public $dateIn;
+    public $dateOut;
+    public $status;
+
     /**
      * Sets the Model's collection
      *
@@ -12,7 +21,7 @@ class Item extends MongoCollection
      */
     public function getSource()
     {
-        return 'items';
+        return 'products';
     }
     /**
      * Returns all users from the Users collection
@@ -21,7 +30,7 @@ class Item extends MongoCollection
      */
     public static function getAll()
     {
-        return Item::find();
+        return Product::find();
     }
     /**
      * Inserts a new user into the collection
@@ -31,16 +40,20 @@ class Item extends MongoCollection
      */
     public static function insert($req)
     {
-        $item = new Item();
-        $item->first = $req->first;
-        $item->last = $req->last;
-        $item->dob = $req->dob;
-        $item->email = $req->email;
+        $product = new Product();
+        $product->uuid = uniqid(md5(random_bytes(10)));
+        $product->userId = $req->userId;
+        $product->spotId = $req->spotId;
+        $product->location = $req->location;
+        $product->status = 0;
+        $product->dateIn = strtotime("now");
+
         # Create() returns bool
-        if($item->create())
+        if($product->create())
         {
             return true;
         }
+
         return false;
     }
 }

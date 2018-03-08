@@ -4,6 +4,7 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Micro;
 use Phalcon\Events\Manager;
 use Middleware\NotFoundMiddleware;
+use Middleware\AuthenticationMiddleware;
 
 error_reporting(E_ALL);
 
@@ -42,6 +43,10 @@ try {
 
     $eventsManager->attach('micro', new NotFoundMiddleware());
     $app->before(new NotFoundMiddleware());
+
+    $eventsManager->attach('micro', new AuthenticationMiddleware());
+    $app->before(new AuthenticationMiddleware());
+
     $app->setEventsManager($eventsManager);
 
     /**

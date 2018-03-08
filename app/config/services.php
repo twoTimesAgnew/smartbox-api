@@ -26,8 +26,8 @@ $di->setShared('collectionManager', function () {
 $di->setShared('redis', function () use ($config) {
 
     $redis = new Predis(["host" => $config->redis->host,
-                        "port" => $config->redis->port,
-                        "database" => $config->redis->db]);
+                         "port" => $config->redis->port,
+                         "database" => $config->redis->db]);
 
     return $redis;
 });
