@@ -4,6 +4,8 @@
  * @var \Phalcon\Mvc\Micro $app
  */
 
+use Lib\Redis;
+
 /**
  * Add your routes here
  */

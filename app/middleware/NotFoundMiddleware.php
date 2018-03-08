@@ -5,6 +5,7 @@ namespace Middleware;
 use Phalcon\Mvc\Micro;
 use Phalcon\Mvc\Micro\MiddlewareInterface;
 use Phalcon\Events\Event;
+use Lib\Redis;
 
 /**
 * NotFoundMiddleware

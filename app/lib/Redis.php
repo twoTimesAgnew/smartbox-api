@@ -7,26 +7,19 @@ use Phalcon\Http\Response\Exception;
 
 class Redis
 {
-    private $auth;
-    private $authLogger;
+    private $infoLogger;
     private $apiLogger;
     private $config;
     private $errorLogger;
     private $redis;
 
-    public function __construct($auth = null, $redis = null)
+    public function __construct()
     {
-        $this->auth = $auth;
-        $this->authLogger = Di::getDefault()->getService("authLogger")->resolve();
+        $this->infoLogger = Di::getDefault()->getService("infoLogger")->resolve();
         $this->errorLogger = Di::getDefault()->getService("errorLogger")->resolve();
         $this->apiLogger = Di::getDefault()->getService("apiLogger")->resolve();
         $this->config = Di::getDefault()->getService("config")->resolve();
-        if(is_null($redis))
-        {
-            $this->redis = Di::getDefault()->getService("redis")->resolve();
-        } else {
-            $this->redis = $redis;
-        }
+        $this->redis = Di::getDefault()->getService("redis")->resolve();
     }
 
     /*
