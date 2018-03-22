@@ -54,6 +54,27 @@ $app->post("/products", function () use ($app) {
     }
 );
 
+$app->get("/products/{uuid}", function($uuid) use ($app) {
+
+    $product = Products::findByUuid($uuid);
+
+    if(empty($product))
+    {
+        $app->response->setStatusCode(404);
+        $product = ["status" => "error", "message" => "No product found for uuid"];
+    }
+    else
+    {
+        $app->response->setStatusCode(200);
+    }
+
+    $app->response->setJsonContent($product);
+
+    $app->response->send();
+
+
+});
+
 $app->put("/products/{uuid}", function ($uuid) use ($app) {
 
     $req = $app->request->getJsonRawBody();

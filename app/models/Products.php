@@ -135,6 +135,11 @@ class Products extends MongoCollection
         $product = new Products();
         $product->setAttributes(Products::findByUuid($uuid));
 
+        if(empty($req))
+        {
+            return false;
+        }
+
         foreach($req as $key => $value)
         {
             if(in_array($key, self::ATTRIBUTES)) {

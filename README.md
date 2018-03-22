@@ -112,3 +112,56 @@ Returns all products for a specific user
   }
 ]
 ```
+
+#### GET /products/{uuid}
+Returns all info for a specific product
+
+##### Returns
+* 200 OK
+```json
+{
+    "_id": {
+        "$oid": "5aa1abc53f3881000175cde2"
+    },
+    "uuid": "6f01c295bda7e2c5f156b329a178c72c5aa1abc515ff6",
+    "userId": 1,
+    "spotId": "B6",
+    "location": {
+        "lat": 71.92921,
+        "lon": 90.2112,
+        "city": "Montreal",
+        "readable": "123 White Ave."
+    },
+    "dateIn": 1520544709,
+    "dateOut": null,
+    "status": 0
+}
+```
+* 404 Not Found
+```json
+{
+    "status": "error",
+    "message": "No product found for uuid"
+}
+```
+
+#### PUT /products/{uuid}
+Updates a product. Any field that belongs to the document can be updated.  
+If a product's status is being updated to 2, the dateOut time will automatically  
+be updated to the current time.
+
+##### Returns
+* 200 OK
+```json
+{
+    "status": "success",
+    "message": "Successfully updated document"
+}
+```
+* 400 Bad Request
+```json
+{
+    "status": "error",
+    "message": "Error updating document"
+}
+```
