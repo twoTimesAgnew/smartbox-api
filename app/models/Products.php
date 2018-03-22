@@ -82,10 +82,7 @@ class Products extends MongoCollection
         # Finds Products for userId = id where status != 2 (picked up)
         return Products::find([
             "conditions" => [
-                "userId" => (int) $id,
-                "status" => [
-                    '$ne' => 2
-                ]
+                "userId" => (int) $id
             ]
         ]);
     }
