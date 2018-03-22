@@ -54,8 +54,25 @@ $app->post("/products", function () use ($app) {
     }
 );
 
-$app->put("/products/{id}", function ($id) use ($app) {
+$app->put("/products/{uuid}", function ($uuid) use ($app) {
 
+    $req = $app->request->getJsonRawBody();
+    $update = Products::updateDoc($uuid, $req);
+
+    if($update)
+    {
+        $app->response->setStatusCode(200);
+        $message = ["status" => "success", "message" => "Successfully updated document"];
+    }
+    else
+    {
+        $app->response->setStatusCode(400);
+        $message = ["status" => "error", "message" => "Error updating document"];
+    }
+
+    $app->response->setJsonContent($message);
+
+    $app->response->send();
 });
 
 $app->get("/products/user/{id}", function ($id) use ($app) {

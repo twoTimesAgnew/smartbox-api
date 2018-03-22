@@ -6,6 +6,7 @@ use Phalcon\Mvc\MongoCollection as MongoCollection;
 
 class Products extends MongoCollection
 {
+    public $_id;
     public $uuid;
     public $userId;
     public $spotId;
@@ -13,6 +14,8 @@ class Products extends MongoCollection
     public $dateIn;
     public $dateOut;
     public $status;
+
+    const ATTRIBUTES = ["_id", "uuid", "userId", "spotId", "location", "dateIn", "dateOut", "status"];
 
     /**
      * Sets the Model's collection
@@ -23,6 +26,41 @@ class Products extends MongoCollection
     {
         return 'products';
     }
+
+    /**
+     * Return the list of attributes
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        $attributes = [];
+
+        foreach(self::ATTRIBUTES as $attribute)
+        {
+            if(isset($this->$attribute)) {
+                $attributes[$attribute] = $this->$attribute;
+            }
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Sets all attributes for a model instance
+     *
+     * @param $doc
+     */
+    public function setAttributes($doc)
+    {
+        foreach(self::ATTRIBUTES as $attribute)
+        {
+            if(isset($doc->$attribute)) {
+                $this->$attribute = $doc->$attribute;
+            }
+        }
+    }
+
     /**
      * Returns all users from the Users collection
      *
@@ -53,6 +91,21 @@ class Products extends MongoCollection
     }
 
     /**
+     * Returns product corresponding to uuid
+     *
+     * @param $uuid
+     * @return array
+     */
+    public static function findByUuid($uuid)
+    {
+        return Products::findFirst([
+            "conditions" => [
+                "uuid" => $uuid
+            ]
+        ]);
+    }
+
+    /**
      * Inserts a new user into the collection
      *
      * @param $req
@@ -70,6 +123,32 @@ class Products extends MongoCollection
 
         # Create() returns bool
         if($product->create())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function updateDoc($uuid, $req)
+    {
+        $product = new Products();
+        $product->setAttributes(Products::findByUuid($uuid));
+
+        foreach($req as $key => $value)
+        {
+            if(in_array($key, self::ATTRIBUTES)) {
+                if($value !== $product->$key) {
+                    $product->$key = $value;
+                }
+            }
+
+            if($key === "status" && $value === 2) {
+                $product->dateOut = strtotime("now");
+            }
+        }
+
+        if($product->save())
         {
             return true;
         }
