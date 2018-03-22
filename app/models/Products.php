@@ -4,7 +4,7 @@ namespace Models;
 
 use Phalcon\Mvc\MongoCollection as MongoCollection;
 
-class Product extends MongoCollection
+class Products extends MongoCollection
 {
     public $uuid;
     public $userId;
@@ -28,10 +28,30 @@ class Product extends MongoCollection
      *
      * @return array
      */
-    public static function getAll()
+    public static function findAll()
     {
-        return Product::find();
+        return Products::find();
     }
+
+    /**
+     * Find all products for a specific user
+     *
+     * @param $id
+     * @return array
+     */
+    public static function findByUserId($id)
+    {
+        # Finds Products for userId = id where status != 2 (picked up)
+        return Products::find([
+            "conditions" => [
+                "userId" => (int) $id,
+                "status" => [
+                    '$ne' => 2
+                ]
+            ]
+        ]);
+    }
+
     /**
      * Inserts a new user into the collection
      *
@@ -40,7 +60,7 @@ class Product extends MongoCollection
      */
     public static function insert($req)
     {
-        $product = new Product();
+        $product = new Products();
         $product->uuid = uniqid(md5(random_bytes(10)));
         $product->userId = $req->userId;
         $product->spotId = $req->spotId;

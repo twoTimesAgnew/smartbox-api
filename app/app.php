@@ -4,7 +4,7 @@
  * @var \Phalcon\Mvc\Micro $app
  */
 
-use Models\Product;
+use Models\Products;
 
 /**
  * Add your routes here
@@ -15,13 +15,9 @@ $app->map('/', function () use ($app) {
     $app->response->send();
 });
 
-$app->get("/users/:id", function() use ($app) {
-
-});
-
 $app->get("/products", function () use ($app) {
     $app->response->setStatusCode(200);
-    $app->response->setJsonContent(Product::getAll());
+    $app->response->setJsonContent(Products::findAll());
 
     $app->response->send();
 });
@@ -29,7 +25,7 @@ $app->get("/products", function () use ($app) {
 $app->post("/products", function () use ($app) {
 
     $data = $app->request->getJsonRawBody();
-    if(Product::insert($data))
+    if(Products::insert($data))
     {
         $app->response->setStatusCode(200);
         $app->response->setJsonContent(["status" => "success", "message" => "successfully added new product for user " . $data->userId]);
@@ -57,6 +53,24 @@ $app->post("/products", function () use ($app) {
         return true;
     }
 );
+
+$app->put("/products/{id}", function ($id) use ($app) {
+
+});
+
+$app->get("/products/user/{id}", function ($id) use ($app) {
+    $products = Products::findByUserId($id);
+
+    if(empty($products))
+    {
+        $products = ["status" => "error", "message" => "No products found for this user"];
+    }
+
+    $app->response->setStatusCode(200);
+    $app->response->setJsonContent($products);
+
+    $app->response->send();
+});
 
 
 
