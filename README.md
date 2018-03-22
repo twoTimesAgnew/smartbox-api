@@ -24,7 +24,7 @@ curl -X GET -H "Authorization: smartbox-api-key" http://52.14.40.2:8600/products
 
 #### GET /products  
 Returns a JSON list of all products
-```
+```json
 [
   {
       "uuid": "298s0agf8xcuj190cs010x9gujajq8as0",
@@ -75,4 +75,40 @@ Required Fields
 * 500 Internal Server Error
 ```
 { "status" : "error", "message" : "error message" }
+```
+
+#### GET /products/user/{id}
+Returns all products for a specific user
+
+##### Returns
+* 200 OK
+```json
+[
+    {
+        "uuid": "c97a34e9190a63d39c12032b9195f9b35ab3f9e2e0e86",
+        "userId": 1,
+        "spotId": "A2",
+        "location": {
+            "lat": 70.999,
+            "lon": 70.999,
+            "city": "Montreal",
+            "readable": "123 White Ave."
+        },
+        "dateIn": 1521744354,
+        "dateOut": null,
+        "status": 0,
+        "_id": {
+            "$oid": "5ab3f9e2da9af20001571f92"
+        }
+    }
+]
+```
+* 200 OK but no data
+```json
+[
+  {
+    "status": "success",
+    "message": "No products found for this user"
+  }
+]
 ```
