@@ -1,12 +1,31 @@
 # Smartbox API
 
-This is a placeholder README.me for Smartbox REST API
-
 ## Technical Specs
 
 * Phalcon 3.2.3
 * PHP 7.1
 * MongoDB
+* Docker
+
+## Installation
+
+Clone the project from this git repo
+```text
+git clone http://github.com/twotimesagnew/smartbox-api.git
+```
+
+Navigate into the directory, then run the following command
+```text
+docker-compose up -d
+```
+
+To verify that everything worked, the command `docker ps` should return the following
+```text
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
+c59c3630b485        smartbox_api        "docker-php-entryp..."   3 seconds ago       Up 3 seconds        0.0.0.0:8600->80/tcp       smartbox_api_1
+dc5be97eb474        mongo:latest        "docker-entrypoint..."   4 seconds ago       Up 4 seconds        0.0.0.0:27017->27017/tcp   smartbox_mongo_1
+a4592b078eca        redis:latest        "docker-entrypoint..."   4 seconds ago       Up 4 seconds        0.0.0.0:6379->6379/tcp     smartbox_redis_1
+```
 
 ## Authentication
 
